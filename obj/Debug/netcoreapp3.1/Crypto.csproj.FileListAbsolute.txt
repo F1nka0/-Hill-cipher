@@ -1,0 +1,13 @@
+C:\Users\xbox0\source\repos\Crypto\bin\Debug\netcoreapp3.1\Crypto.exe
+C:\Users\xbox0\source\repos\Crypto\bin\Debug\netcoreapp3.1\Crypto.deps.json
+C:\Users\xbox0\source\repos\Crypto\bin\Debug\netcoreapp3.1\Crypto.runtimeconfig.json
+C:\Users\xbox0\source\repos\Crypto\bin\Debug\netcoreapp3.1\Crypto.runtimeconfig.dev.json
+C:\Users\xbox0\source\repos\Crypto\bin\Debug\netcoreapp3.1\Crypto.dll
+C:\Users\xbox0\source\repos\Crypto\bin\Debug\netcoreapp3.1\Crypto.pdb
+C:\Users\xbox0\source\repos\Crypto\obj\Debug\netcoreapp3.1\Crypto.csprojAssemblyReference.cache
+C:\Users\xbox0\source\repos\Crypto\obj\Debug\netcoreapp3.1\Crypto.AssemblyInfoInputs.cache
+C:\Users\xbox0\source\repos\Crypto\obj\Debug\netcoreapp3.1\Crypto.AssemblyInfo.cs
+C:\Users\xbox0\source\repos\Crypto\obj\Debug\netcoreapp3.1\Crypto.csproj.CoreCompileInputs.cache
+C:\Users\xbox0\source\repos\Crypto\obj\Debug\netcoreapp3.1\Crypto.dll
+C:\Users\xbox0\source\repos\Crypto\obj\Debug\netcoreapp3.1\Crypto.pdb
+C:\Users\xbox0\source\repos\Crypto\obj\Debug\netcoreapp3.1\Crypto.genruntimeconfig.cache
