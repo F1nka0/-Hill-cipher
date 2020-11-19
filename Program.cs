@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+//using System.Windows.Media;
 namespace Crypto
 {
     
@@ -9,7 +10,6 @@ namespace Crypto
         private static string Alphabet = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ., ?";
         private void Validate(string StringToValidate)
         {
-
             foreach (char ch in StringToValidate.ToUpper())
             {
 
@@ -24,6 +24,34 @@ namespace Crypto
             {
                 NumericAnalogForStringToEncrypt.Add(Alphabet.IndexOf(c));
             }
+        }//TODO - rewrite using lambda
+        private int[,] GetCorrectMatrix(List<int> ListVariant) {
+            int[] ArrayVariant = ListVariant.ToArray();
+            int[,] ArrayToReturn;
+            int counter=0;
+            int len = 0;
+            for (; ; ) {
+
+                if ((int)Math.Sqrt(ListVariant.ToArray().Length)- Math.Sqrt(ListVariant.ToArray().Length)!=0) {
+
+                    ListVariant.Add(35);
+                    
+                }
+                else{
+                    len = (int)Math.Sqrt(ListVariant.ToArray().Length);
+                    ArrayToReturn = new int[len,len];
+                    //return ListVariant.ToArray();
+                    for (int a=0;a<len;a++) {
+                        for (int b=0;b<len;b++) {
+                            ArrayToReturn[a, b] = ArrayVariant[counter];
+
+                             counter++;
+                        }
+                    }
+                    break;
+                }
+            }
+            return ArrayToReturn;
         }
         public string Encrypt(string StringToEncrypt,string KeyWord)
         {
@@ -33,7 +61,9 @@ namespace Crypto
             TurnIntoNumericAnalog(NumericAnalogForStringToEncrypt,StringToEncrypt);
             List<int> NumericAnalogForKeyWord = new List<int>();
             TurnIntoNumericAnalog(NumericAnalogForKeyWord,KeyWord);
-            List<int> 
+            int[,] StringToEncryptMatrix = new int[,] { };
+            int[,] StringKeyWord= new int[,] { };
+            GetCorrectMatrix(NumericAnalogForKeyWord);
             return ""; 
         }
     }
