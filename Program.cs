@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-//using System.Windows.Media;
 namespace Crypto
 {
 
     class Crypter
     {
+        
         private static string Alphabet = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ., ?";
         private void Validate(string StringToValidate)
         {
@@ -19,28 +19,11 @@ namespace Crypto
                 }
             }
         }
-        private List<int[]> sliceArray(int[,] MatrixA)
-        {
 
-            List<int[]> slicedArray = new List<int[]>();
-            int[] currentArray = new int[MatrixA.GetLength(1)]; 
-            for (int a = 0; a < MatrixA.GetLength(0); a++)
-            {
-                for (int b = 0; b < MatrixA.GetLength(1); b++)
-                {
-
-                    currentArray[b] = MatrixA[a, b];
-                }
-                slicedArray.Add(currentArray);
-                currentArray = new int[MatrixA.GetLength(1)];
-            }
-            return slicedArray;
-        }
         private List<int[]> multiplyMatrices(int[,] KeyWordMatrix, int[,] StringToEncryptMatrix)
         {
             List<int[]> listToReturn = new List<int[]>();
-            int[][] slicedStringToEncryptMatrix = sliceArray(StringToEncryptMatrix).ToArray();//3*2
-            //int[][] slicedKeyWordMatrix = sliceArray(KeyWordMatrix).ToArray();
+            int[,] slicedStringToEncryptMatrix = StringToEncryptMatrix;
             int[] currentSumArray = new int[(int)Math.Sqrt(KeyWordMatrix.Length)];
             int currentSum = 0;
             for (int c = 0;c<StringToEncryptMatrix.GetLength(0);c++) {
@@ -48,7 +31,7 @@ namespace Crypto
                 {
                     for (int a = 0; a < KeyWordMatrix.GetLength(1); a++) {
 
-                        currentSum += slicedStringToEncryptMatrix[c][a] * KeyWordMatrix[a, b];
+                        currentSum += slicedStringToEncryptMatrix[c,a] * KeyWordMatrix[a, b];
                     }
                     currentSumArray[b] = currentSum;
                     currentSum = 0;
@@ -64,19 +47,18 @@ namespace Crypto
             {
                 NumericAnalogForStringToEncrypt.Add(Alphabet.IndexOf(c));
             }
-        }//TODO - rewrite using lambda
-        private int[,] GetCorrectMatrixForStringToEncrypt(List<int> KeyWordList, int lenght)//lenght is .GetLength(0); of the main matrix
+        }
+        private int[,] GetCorrectMatrixForStringToEncrypt(List<int> KeyWordList, int lenght)
         {
             int counter = 0;
-            while(((double)KeyWordList.ToArray().Length / (double)lenght)%1!= 0)//Math.Sqrt(KeyWordList.ToArray().Length) != lenght)
+            while(((double)KeyWordList.ToArray().Length / (double)lenght)%1!= 0)
             {
                 KeyWordList.Add(35);
             }
 
             int[,] keyWordMatrix = new int[KeyWordList.ToArray().Length/lenght, lenght];
-            //List<int>
 
-            for (int b=0;b< keyWordMatrix.GetLength(0)/*KeyWordList.ToArray().GetLength(0)*//*KeyWordList.ToArray().Length / lenght*/; b++) {
+            for (int b=0;b< keyWordMatrix.GetLength(0); b++) {
                 for (int a = 0; a < lenght; a++)
                 {
                     keyWordMatrix[b, a] = KeyWordList.ToArray()[counter];
@@ -87,7 +69,7 @@ namespace Crypto
         }
         private int[,] GetCorrectMatrixForKeyWord(List<int> ListVariant)
         {
-            int[] ArrayVariant = ListVariant.ToArray();
+            int[] ArrayVariant;
             int[,] ArrayToReturn;
             int counter = 0;
             int len = 0;
@@ -101,6 +83,7 @@ namespace Crypto
                 }
                 else
                 {
+                    ArrayVariant = ListVariant.ToArray();
                     len = (int)Math.Sqrt(ListVariant.ToArray().Length);
                     ArrayToReturn = new int[len, len];
                     //return ListVariant.ToArray();
@@ -118,20 +101,20 @@ namespace Crypto
             }
             return ArrayToReturn;
         }
-        private int getColumnLength(int[][] jaggedArray, int columnIndex)
-        {
-            int count = 0;
-            foreach (int[] row in jaggedArray)
-            {
-                if (columnIndex < row.Length) count++;
-            }
-            return count;
-        }
+        //private int getColumnLength(int[][] jaggedArray, int columnIndex)
+        //{
+        //    int count = 0;
+        //    foreach (int[] row in jaggedArray)
+        //    {
+        //        if (columnIndex < row.Length) count++;
+        //    }
+        //    return count;
+        //}
         private T[,] To2D<T>(T[][] source)
         {
 
                 int FirstDim = source.Length;
-                int SecondDim = source.GroupBy(row => row.Length).Single().Key; // throws InvalidOperationException if source is not rectangular
+                int SecondDim = source.GroupBy(row => row.Length).Single().Key;
 
                 var result = new T[FirstDim, SecondDim];
                 for (int i = 0; i < FirstDim; ++i)
@@ -178,12 +161,11 @@ namespace Crypto
             TurnIntoNumericAnalog(NumericAnalogForStringToEncrypt, StringToEncrypt);
             List<int> NumericAnalogForKeyWord = new List<int>();
             TurnIntoNumericAnalog(NumericAnalogForKeyWord, KeyWord);
-            int[,] StringKeyWord = GetCorrectMatrixForKeyWord(NumericAnalogForKeyWord);//АЛЬПИНИЗМ
+            int[,] StringKeyWord = GetCorrectMatrixForKeyWord(NumericAnalogForKeyWord);
             int[,] StringToEncryptMatrix = GetCorrectMatrixForStringToEncrypt(NumericAnalogForStringToEncrypt, StringKeyWord.GetLength(1));
-            List<int[]> multiplicationResult= multiplyMatrices(StringKeyWord, StringToEncryptMatrix);//if doesn't work - try swapping arguments
+            List<int[]> multiplicationResult= multiplyMatrices(StringKeyWord, StringToEncryptMatrix);
             string result=divideByModule(multiplicationResult);
-            Console.WriteLine(result);
-            return "";
+            return result;
         }
     }
 
@@ -191,9 +173,33 @@ namespace Crypto
     {
         static void Main(string[] args)
         {
+
             Crypter crypter = new Crypter();
-            crypter.Encrypt("КИМОНО", "КОЛОВОРОТ");
-            crypter.Encrypt("ШИФР", "АЛЬПИНИЗМ");//"АЛЬПИНИЗМ"=ключ             n^3 
+            Console.WriteLine(crypter.Encrypt("Гончарный", "Ярос"));
+            //Console.WriteLine(crypter.Encrypt("КИМОНО", "КОЛОВОРОТ")); // .З.Б,И
+            //Console.WriteLine(crypter.Encrypt("ШИФР", "АЛЬПИНИЗМ"));// АЮНЧХЯ
         }
     }
 }
+/*
+private List<int[]> sliceArray(int[,] MatrixA)
+        {
+
+            List<int[]> slicedArray = new List<int[]>();
+            int[] currentArray = new int[MatrixA.GetLength(1)]; 
+            for (int a = 0; a < MatrixA.GetLength(0); a++)
+            {
+                for (int b = 0; b < MatrixA.GetLength(1); b++)
+                {
+
+                    currentArray[b] = MatrixA[a, b];
+                }
+                slicedArray.Add(currentArray);
+                currentArray = new int[MatrixA.GetLength(1)];
+            }
+            return slicedArray;
+        } 
+
+
+            IEnumerable<bool> temp = StringToValidate.Select(it => Alphabet.Contains(it)).Any(it=>it==false)? throw new Exception("") : new bool[0];
+ */
